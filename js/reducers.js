@@ -1,9 +1,9 @@
 // @flow
 
-import { combineReducers } from 'redux';
-import { SET_SEARCH_TERM, ADD_API_DATA } from './actions';
+import { combineReducers } from "redux";
+import { SET_SEARCH_TERM, ADD_API_DATA } from "./actions";
 
-const searchTerm = (state = '', action: Action) => {
+const searchTerm = (state = "", action: Action) => {
   if (action.type === SET_SEARCH_TERM) {
     return action.payload;
   }
@@ -16,7 +16,6 @@ const apiData = (state = {}, action: Action) => {
   }
   return state;
 };
-
 const rootReducer = combineReducers({ searchTerm, apiData });
 
 export default rootReducer;

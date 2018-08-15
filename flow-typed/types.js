@@ -1,27 +1,11 @@
 // @flow
 
+ export type Show = { title: string, description: string, year: string, imdbID: string, trailer: string, poster: string, rating?: string };
+
 declare var module: {
   hot: {
     accept(path: string, callback: () => void): void
   }
-};
-
-export type Show = {
-  title: string,
-  description: string,
-  year: string,
-  imdbID: string,
-  poster: string,
-  trailer: string,
-  rating?: string
-};
-
-export type State = {
-  searchTerm: string,
-  apiData: {
-    [imdbID: string]: Show
-  }
-};
 
 declare type ActionType = 'SET_SEARCH_TERM' | 'ADD_API_DATA';
 
@@ -30,4 +14,4 @@ declare type ActionT<A: ActionType, P> = {|
   payload: P
 |};
 
-export type Action = ActionT<'SET_SEARCH_TERM', string> | ActionT<'ADD_API_DATA', Show>;
+export type Action = ActionT<'SET_SEARCH_TERM', string> | Action<'ADD_API_DATA', Show>;

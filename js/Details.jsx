@@ -1,46 +1,46 @@
 // @flow
 
-import React from 'react';
-import { connect } from 'react-redux';
-import Header from './Header';
-import Spinner from './Spinner';
-import { getAPIDetails } from './actionCreators';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import getAPIDetails from "./asyncActions";
+import Header from "./Header";
+import Spinner from "./Spinner";
 
-class Details extends React.Component {
+class Details extends Component {
   componentDidMount() {
     if (!this.props.rating) {
       this.props.getAPIData();
     }
   }
   props: {
+    show: Show,
     rating: string,
-    getAPIData: Function,
-    show: Show
+    getAPIData: Function
   };
   render() {
     const { title, description, year, poster, trailer } = this.props.show;
-    let rating;
+    let ratingComponent;
     if (this.props.rating) {
-      rating = <h3>{this.props.rating}</h3>;
+      ratingComponent = <h3>{this.props.rating}</h3>;
     } else {
-      rating = <Spinner />;
+      ratingComponent = <Spinner />;
     }
     return (
       <div className="details">
         <Header />
         <section>
           <h1>{title}</h1>
-          <h2>({year})</h2>
-          {rating}
+          <h2>{year}</h2>
+          {ratingComponent}
           <img src={`/public/img/posters/${poster}`} alt={`Poster for ${title}`} />
           <p>{description}</p>
         </section>
         <div>
           <iframe
-            title="YouTube Video Frame"
             src={`https://www.youtube-nocookie.com/embed/${trailer}?rel=0&amp;controls=0&amp;showinfo=0`}
             frameBorder="0"
             allowFullScreen
+            title={`Trailer for ${title}`}
           />
         </div>
       </div>
@@ -61,4 +61,7 @@ const mapDispatchToProps = (dispatch: Function, ownProps) => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Details);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Details);
